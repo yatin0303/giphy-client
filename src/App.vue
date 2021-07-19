@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app></v-app-bar>
-    <v-navigation-drawer app> </v-navigation-drawer>
+    <!-- <v-navigation-drawer app> </v-navigation-drawer> -->
     <v-main>
       <v-container fluid>
     <search-bar app></search-bar>
