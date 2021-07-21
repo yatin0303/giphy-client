@@ -1,19 +1,26 @@
 <template>
   <v-app>
-    <v-app-bar app></v-app-bar>
-    <!-- <v-navigation-drawer app> </v-navigation-drawer> -->
+    <nav-bar></nav-bar>
+    <!-- <nav-drawer></nav-drawer> -->
+    
+    
     <v-main>
-      <v-container fluid>
-    <search-bar app></search-bar>
+       <tab-view></tab-view>
+      <v-container>
+       
+    <!-- <search-bar app></search-bar> -->
+    <router-view></router-view>
     </v-container>
     </v-main>
   </v-app>
 </template>
 <script>
-// import navBar from './views/navbar.vue'
-import searchBar from './views/search.vue'
+import navBar from './views/navbar.vue'
+import tabView from './views/tabs.vue'
+// import searchBar from './views/search.vue'
+// import navDrawer from './views/drawer.vue'
 export default {
-  components:{searchBar}
+  components:{navBar,tabView}
   
 }
 </script>

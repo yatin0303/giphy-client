@@ -2,11 +2,6 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="auto">
-        <v-form @submit.prevent="fetchimg">
-          <v-text-field prepend-icon="search" v-model="search" @click="find">
-          </v-text-field>
-        </v-form>
-
         <v-card
           height="400px"
           max-width="800px"
@@ -53,7 +48,7 @@ export default {
     },
     async showmore(){
          const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${this.search}&limit=5&offset=6`);
+        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=5&offset=6`);
         const data = await response.json();
         let id = this.picarray.length-1;
         data.data.forEach((element) => {
@@ -66,7 +61,7 @@ export default {
     },
     async fetchimg() {
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${this.search}&limit=5`
+        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=5`
       );
       this.picarray = [];
       const data = await response.json();
@@ -82,5 +77,8 @@ export default {
       console.log(this.picarray);
     },
   },
+  created(){
+      this.fetchimg();
+  }
 };
 </script>
