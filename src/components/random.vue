@@ -42,9 +42,9 @@ export default {
       console.log(this.search);
     },
     isloaded(e) {
-      console.log(this.picarray[e].loaded);
+     
       this.picarray[e].loaded = true;
-      console.log(this.picarray[e].loaded);
+     
     },
     async showmore(){
          const response = await fetch(

@@ -2,6 +2,7 @@
     <v-tabs
     centered
     background-color="pink"
+    color="white--text"
     
     
   >
@@ -9,7 +10,7 @@
       <v-icon>trending_up</v-icon>
       <span> &nbsp; Hot</span>
     </v-tab>
-    <v-tab router to="/home">
+    <v-tab router to="/search">
         <v-icon>search</v-icon>
       <span> &nbsp; Search</span>
       

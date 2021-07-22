@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {path:'/',redirect:'trending',name:'default'},
-  {path:'/home',component:searchBar,name:'search'},
+  {path:'/search/:tag',component:searchBar,name:'search'},
   {path:'/trending',component:trending,name:'trending'},
   {path:'/random',component:random,name:'random'},
   

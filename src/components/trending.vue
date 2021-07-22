@@ -39,12 +39,12 @@ export default {
   },
   methods: {
     find() {
-      console.log(this.search);
+      
     },
     isloaded(e) {
-      console.log(this.picarray[e].loaded);
+     
       this.picarray[e].loaded = true;
-      console.log(this.picarray[e].loaded);
+     
     },
     async showmore(){
          const response = await fetch(
@@ -65,7 +65,7 @@ export default {
       );
       this.picarray = [];
       const data = await response.json();
-      console.log(data);
+      
       let id = 0;
       data.data.forEach((element) => {
         this.picarray.push({
@@ -74,7 +74,7 @@ export default {
           id: id++,
         });
       });
-      console.log(this.picarray);
+      
     },
   },
   created(){
