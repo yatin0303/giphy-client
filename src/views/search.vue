@@ -8,9 +8,10 @@
         </v-form> -->
 
         <v-card
-          height="400px"
-          max-width="800px"
-          class="my-5 pa-5"
+          height="auto"
+          max-width="1200px"
+          width="auto"
+          class="my-5"
           v-for="pic in picarray"
           :key="pic.src"
         >
@@ -28,9 +29,12 @@
             ></v-img>
           </v-lazy>
         </v-card>
-        <v-btn @click="showmore">load more</v-btn>
+       
       </v-col>
     </v-row>
+    <v-layout justify-center>
+     <v-btn @click="showmore">load more</v-btn>
+     </v-layout>
   </v-container>
 </template>
 <script>
@@ -57,8 +61,10 @@ export default {
       console.log(this.picarray[e].loaded);
     },
     async showmore(){
+      const offset = this.picarray.length
+      console.log(offset);
          const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${this.tags}&limit=5&offset=6`);
+        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${this.tags}&limit=5&offset=${offset}`);
         const data = await response.json();
         let id = this.picarray.length-1;
         data.data.forEach((element) => {
@@ -71,7 +77,7 @@ export default {
     },
     async fetchimg() {
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${this.tags}&limit=5`
+        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${this.tags}&limit=25`
       );
       this.picarray = [];
       const data = await response.json();
@@ -89,6 +95,13 @@ export default {
   },
   created(){
     this.fetchimg();
+  }
+  ,watch:{
+    $route(){
+        this.fetchimg(this.$route.params.category);
+
+      
+    }
   }
 };
 </script>

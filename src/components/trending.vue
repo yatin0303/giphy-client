@@ -2,15 +2,17 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="auto">
-        <v-card
-          height="400px"
-          max-width="800px"
-          class="my-5 pa-5"
+      
+       <v-card
+          height="auto"
+          max-width="600px"
+          width="auto"
+          class="my-5"
           v-for="pic in picarray"
           :key="pic.src"
         >
           <v-lazy
-          v-model="pic.loaded"
+            v-model="pic.loaded"
             :options="{
               threshold: 0.5,
             }"
@@ -22,10 +24,20 @@
               :src="pic.src"
             ></v-img>
           </v-lazy>
+            <v-skeleton-loader v-if="!pic.loaded"
+        min-width="360"
+          class="mx-auto"
+          width="auto"
+          type="card"
+          height="300"
+          max-height="400"
+        ></v-skeleton-loader>
         </v-card>
-        <v-btn @click="showmore">load more</v-btn>
       </v-col>
     </v-row>
+    <v-layout justify-center>
+      <v-btn @click="showmore">load more</v-btn>
+    </v-layout>
   </v-container>
 </template>
 <script>
@@ -38,20 +50,18 @@ export default {
     };
   },
   methods: {
-    find() {
-      
-    },
+    find() {},
     isloaded(e) {
-     
       this.picarray[e].loaded = true;
-     
     },
-    async showmore(){
-         const response = await fetch(
-        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=5&offset=6`);
-        const data = await response.json();
-        let id = this.picarray.length-1;
-        data.data.forEach((element) => {
+    async showmore() {
+      const offset = this.picarray.length;
+      const response = await fetch(
+        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=5&offset=${offset}`
+      );
+      const data = await response.json();
+      let id = this.picarray.length - 1;
+      data.data.forEach((element) => {
         this.picarray.push({
           src: element.images.original.url,
           loaded: false,
@@ -61,11 +71,11 @@ export default {
     },
     async fetchimg() {
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=5`
+        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=25`
       );
       this.picarray = [];
       const data = await response.json();
-      
+
       let id = 0;
       data.data.forEach((element) => {
         this.picarray.push({
@@ -74,11 +84,10 @@ export default {
           id: id++,
         });
       });
-      
     },
   },
-  created(){
-      this.fetchimg();
-  }
+  created() {
+    this.fetchimg();
+  },
 };
 </script>

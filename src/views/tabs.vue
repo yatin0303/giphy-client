@@ -1,7 +1,7 @@
 <template>
     <v-tabs
     centered
-    background-color="pink"
+    background-color="#CCA8E9"
     color="white--text"
     
     
@@ -10,14 +10,9 @@
       <v-icon>trending_up</v-icon>
       <span> &nbsp; Hot</span>
     </v-tab>
-    <v-tab router to="/search">
-        <v-icon>search</v-icon>
-      <span> &nbsp; Search</span>
-      
-    </v-tab>
-    <v-tab router to="/random">
+    <v-tab router to="/categories/animals">
       <v-icon>flutter_dash</v-icon>
-      <span> &nbsp; Random</span>
+      <span> &nbsp; category</span>
     </v-tab>
   </v-tabs>
 </template>
