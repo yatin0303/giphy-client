@@ -1,16 +1,16 @@
 <template>
     <v-tabs
     centered
-    background-color="#CCA8E9"
+    background-color="primary"
     color="white--text"
     
     
   >
-    <v-tab router to="/trending">
+    <v-tab router to="/trending" replace >
       <v-icon>trending_up</v-icon>
       <span> &nbsp; Hot</span>
     </v-tab>
-    <v-tab router to="/categories/animals">
+    <v-tab router to="/categories" replace>
       <v-icon>flutter_dash</v-icon>
       <span> &nbsp; category</span>
     </v-tab>
@@ -18,7 +18,6 @@
 </template>
 <script>
 export default {
-    
     
 }
 </script>

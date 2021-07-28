@@ -36,7 +36,7 @@
       </v-col>
     </v-row>
     <v-layout justify-center>
-      <v-btn @click="showmore">load more</v-btn>
+      <v-btn v-if="show" @click="showmore" color="primary">load more</v-btn>
     </v-layout>
   </v-container>
 </template>
@@ -44,20 +44,19 @@
 export default {
   data() {
     return {
+      show:false,
       search: "",
-      key: "z3Dsbbz6C34QALysXK6NLftjy4t24UnJ",
       picarray: [],
     };
   },
   methods: {
-    find() {},
     isloaded(e) {
       this.picarray[e].loaded = true;
     },
     async showmore() {
       const offset = this.picarray.length;
       const response = await fetch(
-        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=5&offset=${offset}`
+        `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=25&offset=${offset}`
       );
       const data = await response.json();
       let id = this.picarray.length - 1;
@@ -70,6 +69,7 @@ export default {
       });
     },
     async fetchimg() {
+      this.show=false
       const response = await fetch(
         `https://api.giphy.com/v1/gifs/trending?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&limit=25`
       );
@@ -84,10 +84,23 @@ export default {
           id: id++,
         });
       });
+      this.show=true
     },
+    //  scroll () {
+    //   window.onscroll = () => {
+    //     let bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight
+
+    //     if (bottomOfWindow) {
+    //      this.showmore();
+    //     }
+    //   }
+    // }
   },
   created() {
     this.fetchimg();
   },
+  // mounted(){
+  //   this.scroll();
+  // }
 };
 </script>

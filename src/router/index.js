@@ -11,6 +11,7 @@ const routes = [
   {path:'/',redirect:'trending',name:'default'},
   {path:'/search/:tag',component:searchBar,name:'search'},
   {path:'/trending',component:trending,name:'trending'},
+  {path:'/categories',component:random,name:'categories'},
   {path:'/categories/:category',component:random,name:'category'},
   {
     path: "/:notfound(.*)*",
@@ -24,7 +25,14 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  components:{
+    searchBar,
+    trending:trending,
+    random ,
+    notFound,
+    
+  }
 })
 
 export default router

@@ -33,7 +33,7 @@
       </v-col>
     </v-row>
     <v-layout justify-center>
-     <v-btn @click="showmore">load more</v-btn>
+     <v-btn v-if="show" @click="showmore">load more</v-btn>
      </v-layout>
   </v-container>
 </template>
@@ -44,6 +44,7 @@ export default {
       search: "",
       key: "z3Dsbbz6C34QALysXK6NLftjy4t24UnJ",
       picarray: [],
+      show:false
     };
   },
   computed:{
@@ -53,16 +54,16 @@ export default {
   },
   methods: {
     find() {
-      console.log(this.search);
+  
     },
     isloaded(e) {
-      console.log(this.picarray[e].loaded);
+  
       this.picarray[e].loaded = true;
-      console.log(this.picarray[e].loaded);
+    
     },
     async showmore(){
       const offset = this.picarray.length
-      console.log(offset);
+     
          const response = await fetch(
         `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${this.tags}&limit=5&offset=${offset}`);
         const data = await response.json();
@@ -81,7 +82,7 @@ export default {
       );
       this.picarray = [];
       const data = await response.json();
-      console.log(data);
+     
       let id = 0;
       data.data.forEach((element) => {
         this.picarray.push({
@@ -90,7 +91,7 @@ export default {
           id: id++,
         });
       });
-      console.log(this.picarray);
+      this.show=true;
     },
   },
   created(){

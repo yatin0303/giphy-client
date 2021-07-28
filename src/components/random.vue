@@ -23,12 +23,20 @@
               :src="pic.src"
             ></v-img>
           </v-lazy>
+            <v-skeleton-loader v-if="!pic.loaded"
+        min-width="360"
+          class="mx-auto"
+          width="auto"
+          type="card"
+          height="300"
+          max-height="400"
+        ></v-skeleton-loader>
         </v-card>
         
       </v-col>
     </v-row>
     <v-layout justify-center>
-     <v-btn @click="showmore">load more</v-btn>
+     <v-btn v-if="show" @click="showmore">load more</v-btn>
      </v-layout>
   </v-container>
 </template>
@@ -37,8 +45,8 @@ export default {
   data() {
     return {
       search: "",
-      key: "z3Dsbbz6C34QALysXK6NLftjy4t24UnJ",
       picarray: [],
+      show:false
     };
   },
   methods: {
@@ -51,7 +59,7 @@ export default {
         const tag =this.$route.params.category
         let offset = this.picarray.length
          const response = await fetch(
-        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${tag}&limit=20&offset=${offset}`);
+        `https://api.giphy.com/v1/gifs/search?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ&q=${tag}&limit=25&offset=${offset}`);
         const data = await response.json();
         let id = this.picarray.length-1;
         data.data.forEach((element) => {
@@ -77,14 +85,27 @@ export default {
           id: id++,
         });
       });
-      console.log(this.picarray);
+      this.show=true
+
      
     },
+    // scroll () {
+    //   window.onscroll = () => {
+    //     let bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight
+
+    //     if (bottomOfWindow) {
+    //      this.showmore();
+    //     }
+    //   }
+    // }
   },
   created(){
-    console.log('henlo');
       this.fetchimg(this.$route.params.category||'animals');
   },
+//   mounted(){
+// this.scroll();
+//   },
+
   watch:{
     $route(){
       this.fetchimg(this.$route.params.category);

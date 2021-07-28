@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <v-app-bar app flat color="#CCA8E9">
+    <v-app-bar app flat color="primary" >
       <v-tooltip bottom>
       <template v-slot:activator="{ on, attrs }">
-      <v-app-bar-nav-icon @click="drawer = !drawer" v-bind="attrs" v-on="on"></v-app-bar-nav-icon> </template>
+      <v-app-bar-nav-icon @click="toggle" v-bind="attrs" v-on="on"></v-app-bar-nav-icon> </template>
          <span>Categories</span>
           
           </v-tooltip>
@@ -47,7 +46,7 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon @click="darkMode" v-bind="attrs" v-on="on">
-                <v-icon>
+                <v-icon color="text">
                   {{ mode }}
                 </v-icon>
               </v-btn>
@@ -58,8 +57,8 @@
         <v-col cols="auto">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon router to="/trending" v-bind="attrs" v-on="on">
-                <v-icon>
+              <v-btn icon router to="/trending" replace v-bind="attrs" v-on="on" >
+                <v-icon color="text">
                   whatshot
                 </v-icon>
               </v-btn>
@@ -71,51 +70,30 @@
       <!-- </v-container> -->
     </v-app-bar>
 
-    <v-navigation-drawer :value="drawer" touchless app>
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="text-h6 grey--text">
-            Categories
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
 
-      <v-divider></v-divider>
 
-      <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-content @click="category(item.name)">
-            <v-list-item-title>{{ item.name }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-  </div>
 </template>
 <script>
 export default {
+
+  emits:['hello'],
+  
   data() {
     return {
-      drawer: false,
       items: [],
       mode: "dark_mode",
       search: false,
       value: "",
       suggestions: [],
       loading: false,
+      draw:true
     };
   },
   methods: {
-    async categories() {
-      const response = await fetch(
-        "https://api.giphy.com/v1/gifs/categories?api_key=z3Dsbbz6C34QALysXK6NLftjy4t24UnJ"
-      );
-      const data = await response.json();
-
-      data.data.forEach((element) => {
-        this.items.push({ name: element.name });
-      });
+    toggle(){
+     this.$emit('hello')
     },
+
     darkMode() {
       const theme = this.$vuetify.theme.dark;
       this.$vuetify.theme.dark = !theme;
@@ -137,19 +115,12 @@ export default {
         this.suggestions.push(data.data[i].name);
       }
     },
-    temp(input) {
-      console.log(input);
-    },
+
     go(e) {
-      console.log(e);
+     
       this.$router.replace(`/search/${e}`);
     },
-    category(item) {
-      this.$router.replace(`/categories/${item}`);
-    },
-  },
-  created() {
-    this.categories();
+   
   },
 };
 </script>
